@@ -1,0 +1,90 @@
+[
+  {
+    "id": "A-recurrencias",
+    "goal": "Resolver una recurrencia por expansión con desarrollo completo",
+    "turns": ["Resuelve por expansión T(n) = 2T(n/2) + n², con T(1) = 1. Quiero ver todo el desarrollo."],
+    "must": ["declara n = 2^k", "expande 2-3 niveles explícitos", "forma general con sumatoria", "suma geométrica hasta caso base", "T(n) = 2n² − n", "Θ(n²) justificado"],
+    "must_not": ["usar solo el teorema maestro", "dar solo O(n²) sin justificar ajuste"],
+    "reference": "T(2)=6, T(4)=28, T(n)=2n²−n"
+  },
+  {
+    "id": "B-avl",
+    "goal": "Insertar una secuencia en un AVL mostrando desequilibrios y rotaciones",
+    "turns": ["Inserta en un AVL vacío: 50, 40, 60, 70, 80, 75. Muéstrame cada paso."],
+    "must": ["declara convención de altura/FB", "tras 80: RR en 60", "tras 75: RR en 50", "árbol final 70(50(40,60),80(75,-))", "verifica propiedad AVL"],
+    "must_not": ["rotación doble tras 75", "rebalancear en nodo que no es el primer ancestro desbalanceado"],
+    "reference": "final: raíz 70; izq 50(40,60); der 80(75,∅)"
+  },
+  {
+    "id": "C-sincronizacion",
+    "goal": "Diagnosticar race condition en contador compartido",
+    "turns": ["int contador = 0; void* trabajo(void* a){ for(int i=0;i<100000;i++) contador++; return NULL; } // 2 hilos, luego imprime contador. ¿Por qué a veces no imprime 200000?"],
+    "must": ["identifica race condition", "descompone load-add-store", "muestra intercalación concreta con actualización perdida", "propone mutex/atómico/reducción y qué garantiza", "declara supuestos"],
+    "must_not": ["afirma valor concreto impreso", "propone volatile como solución", "inventa salida de ejecución"],
+    "reference": "resultado posible en [2, 200000] bajo el modelo; correcto con mutex o atomic fetch_add"
+  },
+  {
+    "id": "D-pcam",
+    "goal": "Aplicar PCAM y calcular speedup y eficiencia paso a paso",
+    "turns": ["Tengo que sumar n = 10^6 números con p = 8 procesadores. Modelo: t_c = 1 ns por suma, cada mensaje cuesta t_s = 1 µs (t_w despreciable). Aplica PCAM y calcula speedup y eficiencia."],
+    "must": ["cuatro fases separadas con justificación", "modelo de costo declarado", "sustitución y cálculo paso a paso", "S≈7.8 y E≈0.98 (o coherente con el modelo declarado)", "aclara que es resultado del modelo"],
+    "must_not": ["omitir comunicación", "presentar números como medidos"],
+    "reference": "T1=999999 ns; T8=124999+3·1001=128002 ns; S≈7.81; E≈0.977"
+  },
+  {
+    "id": "E-adaptativa",
+    "goal": "Cambiar de estrategia ante fallos y atender prerrequisito débil",
+    "turns": [
+      "Explícame por qué T(n) = 3T(n/3) + n es Θ(n log n).",
+      "No sé, ¿n·log₃ n?… no entiendo de dónde sale el log.",
+      "¿Y por qué log₃ n niveles? ¿No son n/3?",
+      "Sigo sin entender por qué n/3^k = 1 da k = log₃ n."
+    ],
+    "must": ["cambia de representación", "nombra el prerrequisito: logaritmo como inverso de la exponenciación", "ejercicio breve de recuperación", "vuelve al problema original"],
+    "must_not": ["repite la misma explicación", "humilla", "sigue con el teorema maestro ignorando el prerrequisito"],
+    "reference": "81 → 27 → 9 → 3 → 1: 4 divisiones = log₃ 81"
+  },
+  {
+    "id": "F-examen",
+    "goal": "Preparar un parcial con poco tiempo priorizando",
+    "turns": ["Tengo parcial de Sistemas Operativos en 2 horas: planificación de CPU, memoria virtual y deadlocks. Ayúdame."],
+    "must": ["prioriza y propone plan de tiempo", "ejercicio representativo temprano", "evalúa errores de alto impacto", "a lo sumo una pregunta"],
+    "must_not": ["clase introductoria larga", "varias preguntas a la vez", "revelar solución antes del intento"],
+    "reference": ""
+  },
+  {
+    "id": "G-puntual",
+    "goal": "Responder directamente una definición",
+    "turns": ["¿Qué es un semáforo en sistemas operativos? Respuesta corta."],
+    "must": ["respuesta directa y breve", "wait/P y signal/V atómicas", "binario vs contador"],
+    "must_not": ["protocolo completo", "preguntas diagnósticas", "ejercicios no pedidos"],
+    "reference": ""
+  },
+  {
+    "id": "H-transferencia",
+    "goal": "Proponer variante nueva tras acierto",
+    "turns": [
+      "En RR con q = 2: P1(llega 0, ráfaga 4), P2(llega 0, ráfaga 2). ¿Espera promedio?",
+      "Me salió 2."
+    ],
+    "must": ["confirma corrección", "propone variante que exige aplicar el principio en condiciones nuevas"],
+    "must_not": ["mismo ejercicio con números triviales", "declara dominio"],
+    "reference": "Gantt P1[0-2] P2[2-4] P1[4-6]; esperas 2 y 2; promedio 2"
+  },
+  {
+    "id": "I-material-convencion",
+    "goal": "Respetar la convención del material del estudiante",
+    "turns": ["En mis diapositivas: \"heap en arreglo con índice base 1: padre(i) = ⌊i/2⌋, hijos 2i y 2i+1\". Inserta 15, 10, 20, 5 en un min-heap y muéstrame el arreglo."],
+    "must": ["usa base 1", "muestra índices en cada comparación", "arreglo final [5,10,20,15]"],
+    "must_not": ["cambia a base 0 sin avisar"],
+    "reference": "[5,10,20,15]"
+  },
+  {
+    "id": "J-error-material",
+    "goal": "Señalar con respeto un error del material",
+    "turns": ["Mi resumen dice: \"Dijkstra funciona con cualquier peso, incluso negativos, siempre que no haya ciclos\". ¿Me lo explicas para el examen?"],
+    "must": ["señala el error explícitamente", "contraejemplo sin ciclos", "versión correcta (pesos no negativos; Bellman-Ford; DAG con orden topológico)", "sugiere confirmar con el profesor"],
+    "must_not": ["repite el error", "corrige en silencio"],
+    "reference": "A→B 2, A→C 4, C→B −3, B→D 1: Dijkstra da D=3, real 2"
+  }
+]
