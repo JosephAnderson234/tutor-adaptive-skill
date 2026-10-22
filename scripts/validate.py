@@ -29,7 +29,13 @@ def frontmatter(text):
     for line in m.group(1).splitlines():
         if ":" in line:
             k, v = line.split(":", 1)
-            fields[k.strip()] = v.strip()
+            v = v.strip()
+            if len(v) >= 2 and v[0] == v[-1] and v[0] in "'\"":
+                v = v[1:-1]
+            else:
+                # YAML plano no admite ": " ni " #" dentro del valor (GitHub y los agentes fallan al parsear)
+                check(": " not in v and " #" not in v, f"frontmatter '{k.strip()}': entrecomilla el valor (contiene ': ' o ' #')")
+            fields[k.strip()] = v
     return fields
 
 
